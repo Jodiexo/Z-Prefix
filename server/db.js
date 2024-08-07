@@ -12,4 +12,15 @@ const db = knex({
     },
 });
 
+console.log('Database connection config:', {
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    database: process.env.DB_NAME,
+});
+
+db.raw('SELECT 1')
+  .then(() => console.log('Database connected successfully'))
+  .catch((e) => console.error('Database connection failed:', e));
+
 module.exports = db;
