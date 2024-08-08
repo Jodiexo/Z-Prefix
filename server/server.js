@@ -12,7 +12,9 @@ app.use(express.json());
 
 // Routes
 const authRoutes = require('./routes/auth');
+const itemRoutes = require('./routes/items');
 app.use('/api/auth', authRoutes)
+app.use('/api/items', itemRoutes)
 
 app.get('/', (req, res) => {
     res.json({ message: 'Welcome to Inventory Management' });
