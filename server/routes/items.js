@@ -48,7 +48,7 @@ router.get('/public/:id', async (req, res) => {
 // Protected routes (authentication required)
 router.use(authMiddleware);
 
-router.post('/', async (req, res) => {
+router.post('/',authMiddleware, async (req, res) => {
     const { name, description, quantity } = req.body;
     try {
         const [item] = await db('items').insert({

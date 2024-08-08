@@ -4,6 +4,9 @@ import { AuthProvider, useAuth } from './AuthContext';
 import Login from './Login';
 import Register from './Register';
 import ItemList from './ItemList';
+import ItemDetail from './ItemDetail';
+import AddItemForm from './AddItemForm';
+import './App.css';
 
 const PrivateRoute = ({ children }) => {
   const { isAuthenticated } = useAuth();
@@ -15,28 +18,31 @@ function App() {
 
   return (
     <Router>
-      <div className="App">
+       <div className="App">
         <nav>
+          <Link to="/items">View Items</Link>
+          {isAuthenticated && <Link to="/add-item">Add Item</Link>}
+          <div className='logout-button'>
           {isAuthenticated ? (
-            <>
-              <Link to="/items">View Items</Link>
-              <Link to="/manage-items">Manage Items</Link>
-              <button onClick={logout}>Logout</button>
-            </>
+            <button onClick={logout}>Logout</button>
           ) : (
+            
             <>
               <Link to="/login">Login</Link>
               <Link to="/register">Register</Link>
             </>
           )}
+          </div>
         </nav>
 
         <Routes>
-      <Route path="/login" element={isAuthenticated ? <Navigate to="/items" /> : <Login />} />
-          <Route path="/register" element={isAuthenticated ? <Navigate to="/items" /> : <Register />} />
-          <Route 
-            path="/items" 
-            element={isAuthenticated ? <ItemList /> : <Navigate to="/login" />} 
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/items" element={<ItemList />} />
+          <Route path="/items/:id" element={<ItemDetail />} />
+           <Route 
+            path="/add-item" 
+            element={isAuthenticated ? <AddItemForm /> : <Navigate to="/login" />} 
           />
           <Route path="/" element={<Navigate to="/items" />} />
         </Routes>
