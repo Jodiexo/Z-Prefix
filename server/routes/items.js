@@ -23,8 +23,12 @@ router.post('/', authMiddleware, async (req, res) => {
 
 router.get('/', authMiddleware, async (req, res) => {
     try {
-        const items = await db('items').where({ user_id: req.user.id });
-        res.json(items);
+       const items = await db('items')
+      .select('id', 'name', 'description', 'quantity', 'user_id')
+      .modify(function(queryBuilder) {
+        queryBuilder.select(db.raw('CASE WHEN LENGTH(description) > 100 THEN CONCAT(LEFT(description, 100), \'...\') ELSE description END as description'));
+         });
+          res.json(items);
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Server error' });
@@ -70,6 +74,36 @@ router.delete('/:id', authMiddleware, async (req, res) => {
             return res.status(404).json({ error: 'Item not found' });
         }
         res.json({ message: 'Item deleted successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server error' })
+    }
+});
+
+//public routes
+router.get('/public', async (req, res) => {
+    try {
+        const items = await db('items')
+            .select('id', 'name', 'description', 'quantity', 'user_id')
+            .modify(function (queryBuilder) {
+                queryBuilder.select(db.raw('CASE WHEN LENGTH(description) > 100 THEN CONCAT(LEFT(description, 100), \'...\') ELSE description END as description'));
+            });
+        res.json(items);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server error' })
+    }
+});
+
+router.get('/public/:id', async (req, res) => {
+    try {
+        const item = await db('items')
+            .where({ id: req.params.id })
+            .first();
+        if (!item) {
+            return res.status(404).json({ error: 'Item not found' });
+        }
+        res.json(item);
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Server error' })
