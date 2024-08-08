@@ -9,6 +9,13 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
+// Logging middleware
+app.use((req, res, next) => {
+    console.log(`${req.method} ${req.path}`, req.body);
+    next();
+});
+
+
 
 // Routes
 const authRoutes = require('./routes/auth');

@@ -34,4 +34,42 @@ router.post('/register', async (req, res) => {
   }
 });
 
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    // Check if user exists
+    const user = await db('users').where({ email }).first();
+     console.log('Login attempt:', { email });
+    if (!user) {
+      console.log('User not found');
+      return res.status(400).json({ error: 'Invalid credentials' });
+    }
+
+    // Check password
+    const validPassword = await bcrypt.compare(password, user.password);
+    console.log('Password valid:', validPassword);
+    if (!validPassword) {
+      return res.status(400).json({ error: 'Invalid credentials' });
+    }
+
+    // Create and send token
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    console.log('Login successful, token created');
+    res.json({ token });
+  } catch (error) {
+    console.error('Login error:', error);
+    res.status(500).json({ error: 'Server error', details: error.message });
+  }
+});
+
+router.get('/users', async (req, res) => {
+  try {
+    const users = await db('users').select('id', 'email', 'username');
+    res.json(users);
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 module.exports = router;
