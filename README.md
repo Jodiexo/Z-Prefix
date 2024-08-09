@@ -1,8 +1,8 @@
 # Z-Prefix
 
 ## VERY IMPORTANT!
--When you register a account you must logout first then login with your email and password in order to see your items.
--Once you login the login dialogue box with still be open but you are able to see your items as well as edit/add items.
+-When you register a account you must logout first then login with your email and password in order to see your items
+-Once you login the login dialogue box with still be open but you are able to see your items as well as edit/add items
 
 
 ## Overview
@@ -36,38 +36,44 @@ This Inventory Management System is a web application that allows users to manag
 
 1. Clone the repository:
    ```
-   git clone https://github.com/Jodiexo/Z-Prefix
-   cd Z-Prefix
+   git clone https://github.com/your-username/inventory-management-system.git
+   cd inventory-management-system
    ```
 
-2. Install dependencies:
+2. Set up the database using Docker:
+   ```
+   docker-compose up -d
+   ```
+
+3. Install dependencies:
    ```
    # Install backend dependencies
    cd server
    npm install
 
    # Install frontend dependencies
-   cd ../client
+   cd ../client/my-app
    npm install
    ```
 
-3. Set up the database:
-   - Create a PostgreSQL database
-   - Update the database configuration in `server/knexfile.js`
-
-4. Run migrations:
-   ```
-   cd server
-   npx knex migrate:latest
-   ```
-
-5. Set up environment variables:
+4. Set up environment variables:
    - Create a `.env` file in the `server` directory
    - Add the following variables:
      ```
      PORT=3000
      JWT_SECRET=your_jwt_secret_here
+     DB_HOST=localhost
+     DB_PORT=5432
+     DB_USER=your_db_user
+     DB_PASSWORD=your_db_password
+     DB_NAME=your_db_name
      ```
+
+5. Run migrations:
+   ```
+   cd server
+   npx knex migrate:latest
+   ```
 
 6. Start the servers:
    ```
@@ -80,8 +86,14 @@ This Inventory Management System is a web application that allows users to manag
    npm start
    ```
 
-7. Open your browser and navigate to `http://localhost:3001`
+7. Open your browser and navigate to `http://localhost:3000`
 
+## Docker Commands (for database)
+
+- Start the database: `docker-compose up -d`
+- Stop the database: `docker-compose down`
+- View logs: `docker-compose logs`
+- Access the database: `docker-compose exec db psql -U your_db_user -d your_db_name`
 ## Usage
 
 1. Register a new account or log in with existing credentials.
