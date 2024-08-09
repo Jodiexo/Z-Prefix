@@ -19,8 +19,12 @@ const AddItemForm = () => {
             );
             navigate('/items'); // Redirect to items list after successful addition
         } catch (error) {
-            setError('Failed to add item. Please try again.');
-            console.error('Error adding item:', error);
+            if (error.response && error.response.data) {
+                setError(error.response.data.error || 'Failed to add item. Please try again.');
+            } else {
+                setError('Failed to add item. Please try again.');
+                   }
+        console.error('Error adding item:', error);
         }
     };
 

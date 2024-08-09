@@ -22,8 +22,6 @@ const Register = (onRegisterSuccess) => {
             navigate('/items');
             if (typeof onRegisterSuccess === 'function') {
                 onRegisterSuccess();
-            } else {
-                navigate('/items');
             }
         } catch (error) {
              console.error('Registration error:', error.response ? error.response.data : error.message);

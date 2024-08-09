@@ -50,12 +50,13 @@ router.use(authMiddleware);
 
 router.post('/',authMiddleware, async (req, res) => {
     const { name, description, quantity } = req.body;
+    const userId = typeof req.user.id === 'object' ? req.user.id.id : req.user.id;
     try {
         const [item] = await db('items').insert({
             name,
             description,
             quantity,
-            user_id: req.user.id
+            user_id: userId
         }).returning('*');
         res.status(201).json(item);
     } catch (error) {
@@ -106,9 +107,10 @@ router.get('/:id', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     const { name, description, quantity } = req.body;
+    const itemId = parseInt(req.params.id, 10);
     try {
         const [updatedItem] = await db('items')
-            .where({ id: req.params.id, user_id: req.user.id })
+            .where({ id: itemId, user_id: req.user.id })
             .update({ name, description, quantity })
             .returning('*');
         if (!updatedItem) {
@@ -124,7 +126,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try {
         const deletedCount = await db('items')
-            .where({ id: req.params.id, user_id: req.user.id })
+            .where({ id: req.params.id, user_id: req.user.id})
             .del();
         if (deletedCount === 0) {
             return res.status(404).json({ error: 'Item not found' });

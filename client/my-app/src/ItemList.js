@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from './AuthContext';
 import { useNavigate } from 'react-router-dom';
+import './ItemList.css';
 
 const EditItemForm = ({ item, onSave, onCancel }) => {
     const [name, setName] = useState(item.name);

@@ -1,0 +1,62 @@
+/* itemlist.css */
+
+.item-list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.item-list-container h1 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.item-list-controls {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.item-list-controls button {
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+.item {
+    width: 100%;
+    max-width: 800px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.item h2 {
+    margin-top: 0;
+    font-size: 24px;
+}
+
+.item p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination-controls button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+.pagination-controls span {
+    line-height: 40px;
+    font-size: 16px;
+}
