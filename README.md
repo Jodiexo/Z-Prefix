@@ -1,8 +1,8 @@
 # Z-Prefix
 
 ## VERY IMPORTANT!
--When you register a account you must logout first then login with your email and password in order to see your items
--Once you login the login dialogue box with still be open but you are able to see your items as well as edit/add items
+   -When you register a account you must logout first then login with your email and password in order to see your items
+   -Once you login the login dialogue box with still be open but you are able to navagate away in order see your items as well as edit/add items.
 
 
 ## Overview
